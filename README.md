@@ -1,2 +1,6 @@
 # kenzie-shimrock-fe-takehome
- Coterie Take Home Project
+ ## Steps:
+1: install React Redux
+2: learn redux
+https://www.youtube.com/watch?v=qNjNn9BCWCc
+
