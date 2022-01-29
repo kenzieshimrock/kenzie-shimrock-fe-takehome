@@ -6,10 +6,23 @@ import {
   TextField,
   Autocomplete,
 } from "@mui/material";
+import submitBusinessAction from "../../Actions/Business";
+import store from "../../store";
 
+import { useState } from "react";
 function Business() {
+  /// theme
   const theme = useTheme();
 
+  /// local states
+  const [businessName, setBusiness] = useState(store.getState().businessName);
+  const [industryId, setIndustry] = useState(store.getState().industryId);
+  const [numEmployees, setEmployeeNum] = useState(
+    store.getState().numEmployees
+  );
+  const [zip, setZip] = useState(store.getState().locations[0].zip);
+
+  /// properties
   const properties = {
     businessContainer: {
       component: "div",
@@ -17,25 +30,35 @@ function Business() {
     },
     employees: {
       id: "number of employees",
-      type: "number",
+      type: "text",
       label: "# of employees",
+      value: numEmployees,
       required: true,
+      onChange: (e) => setEmployeeNum(e.target.value),
     },
     businessName: {
       id: "business name",
       type: "text",
       label: "business name",
+      value: businessName,
       required: true,
-      // color: "#3BCEAC",
+      onChange: (e) => setBusiness(e.target.value),
     },
     zip: {
       id: "zip code",
       type: "text",
       label: "zip code",
+      value: zip,
       required: true,
+      onChange: (e) => setZip(e.target.value),
+    },
+    industry: {
+      id: "industry",
+      onChange: (e, value) => setIndustry(value.id),
     },
   };
 
+  /// styles
   const styles = (theme) => ({
     cardContent: {
       display: "flex",
@@ -46,7 +69,6 @@ function Business() {
       },
     },
 
-    // -----------------------------------
     businessContainer: {
       display: "flex",
       flexDirection: "column",
@@ -69,7 +91,7 @@ function Business() {
         width: "40%",
       },
     },
-    // ------------------------------------
+
     industry: {
       [theme.breakpoints.down("sm")]: {
         marginBottom: "1rem",
@@ -86,41 +108,24 @@ function Business() {
         marginTop: "1rem",
       },
       [theme.breakpoints.up("sm")]: {
-        // width: "90%",
         flexDirection: "row",
       },
     },
   });
 
+  /// industry information
   const industries = [
-    { type: "physician_office", label: "Physicians Offices", id: "621111" },
-    { type: "law_firms", label: "Law Firms", id: "541110" },
-    { type: "dentist_office", label: "Dentist Office", id: "621210" },
-    { type: "insurance_office", label: "Insurance Office", id: "524298" },
-    {
-      type: "commercial_banks",
-      label: "Commercial Banking",
-      id: "522110",
-    },
-    { type: "landscape_care", label: "Landscape Care", id: "561730" },
-    { type: "hvac", label: "HVAC", id: "238220" },
-    {
-      type: "real_estate_agencies",
-      label: "Real Estate Agencies",
-      id: "531210",
-    },
-    {
-      type: "general_automotive_care",
-      label: "General Automotive Care",
-      id: "811111",
-    },
-    { type: "supermarkets", label: "Supermarkets", id: "445110" },
+    { label: "Plumber", id: "10537" },
+    { label: "Software Developer", id: "10391" },
+    { label: "Lawyer", id: "10415" },
+    { label: "Handyman", id: "10109" },
   ];
 
   return (
     <Shell
       heading="Business Information"
       index={2}
+      action={submitBusinessAction(businessName, numEmployees, zip, industryId)}
       content={
         <CardContent sx={styles(theme).cardContent}>
           <Container
@@ -136,8 +141,12 @@ function Business() {
 
           <Container sx={styles(theme).industryContainer}>
             <Autocomplete
+              {...properties.industry}
               sx={styles(theme).industry}
               options={industries}
+              isOptionEqualToValue={(option, value) =>
+                option.label === value.label
+              }
               renderInput={(params) => (
                 <TextField {...params} label="industry" />
               )}

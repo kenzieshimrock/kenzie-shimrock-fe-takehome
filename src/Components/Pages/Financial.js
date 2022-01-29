@@ -9,11 +9,13 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useState } from "react";
+import submitFinancialsAction from "../../Actions/Financial";
+import store from "../../store";
 
 function Financial() {
   const theme = useTheme();
-  const [sales, setSales] = useState("$50,000");
-  const [payroll, setPayroll] = useState("$50,000");
+  const [sales, setSales] = useState(store.getState().grossAnnualSales);
+  const [payroll, setPayroll] = useState(store.getState().annualPayroll);
 
   const properties = {
     selectionsContainer: {
@@ -71,6 +73,7 @@ function Financial() {
     <Shell
       heading="Financial Information"
       index={3}
+      action={submitFinancialsAction(sales, payroll)}
       content={
         <CardContent sx={styles(theme).cardContent}>
           <Container
@@ -80,26 +83,24 @@ function Financial() {
             <FormControl fullWidth sx={styles(theme).salesForm}>
               <InputLabel>Annual Sales</InputLabel>
               <Select {...properties.salesSelect}>
-                <MenuItem value={"$50,000"}>$50,000</MenuItem>
-                <MenuItem value={"$75,000"}>$75,000</MenuItem>
-                <MenuItem value={"$100,000"}>$100,000</MenuItem>
-                <MenuItem value={"$150,000"}>$150,000</MenuItem>
-                <MenuItem value={"$200,000"}>$200,000</MenuItem>
+                <MenuItem value={50000}>$50,000</MenuItem>
+                <MenuItem value={75000}>$75,000</MenuItem>
+                <MenuItem value={100000}>$100,000</MenuItem>
+                <MenuItem value={150000}>$150,000</MenuItem>
+                <MenuItem value={200000}>$200,000</MenuItem>
               </Select>
             </FormControl>
             <FormControl fullWidth sx={styles(theme).payrollForm}>
               <InputLabel>Annual Payroll</InputLabel>
               <Select {...properties.payrollSelect}>
-                <MenuItem value={"$50,000"}>$50,000</MenuItem>
-                <MenuItem value={"$75,000"}>$75,000</MenuItem>
-                <MenuItem value={"$100,000"}>$100,000</MenuItem>
-                <MenuItem value={"$150,000"}>$150,000</MenuItem>
-                <MenuItem value={"$200,000"}>$200,000</MenuItem>
+                <MenuItem value={50000}>$50,000</MenuItem>
+                <MenuItem value={75000}>$75,000</MenuItem>
+                <MenuItem value={100000}>$100,000</MenuItem>
+                <MenuItem value={150000}>$150,000</MenuItem>
+                <MenuItem value={200000}>$200,000</MenuItem>
               </Select>
             </FormControl>
           </Container>
-
-          {/* <Container sx={styles(theme).industryContainer}></Container> */}
         </CardContent>
       }
     />

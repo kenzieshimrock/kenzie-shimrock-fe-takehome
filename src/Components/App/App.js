@@ -8,6 +8,7 @@ import Financial from "../Pages/Financial";
 import Business from "../Pages/Business";
 import Policies from "../Pages/Policies";
 
+/// routes to be dynamically rendered
 export const routes = [
   {
     key: "intro",
@@ -21,12 +22,12 @@ export const routes = [
   },
   {
     key: "business",
-    path: "/business_information",
+    path: "/business",
     page: <Business />,
   },
   {
     key: "financial",
-    path: "/financial_information",
+    path: "/financial",
     page: <Financial />,
   },
 
@@ -59,6 +60,8 @@ function App() {
     </ThemeProvider>
   );
 }
+
+/// updated theming (to be implemented)
 const theme = createTheme({
   palette: {
     primary: {

@@ -1,8 +1,16 @@
 import Shell from "./Shell";
-import TextField from "@mui/material/TextField";
-
+import store from "../../store";
 function Policies() {
-  return <Shell heading="Policies" index={4} />;
+  const policies = store.getState().policies;
+  return (
+    <Shell
+      heading="Policies"
+      index={4}
+      content={policies.map((policy) => (
+        <p key={Math.random()}>{policy}</p>
+      ))}
+    />
+  );
 }
 
 export default Policies;
