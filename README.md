@@ -5,6 +5,7 @@
 - implementation of form validation
 - optimized routing and error handling so routes can't be pushed if inputs are empty
 - updated styling
+- updated styling and copy on Policy page
 - return user to intro page on refresh
 - implementation of unit testing
 - possibly preserve state on refresh
